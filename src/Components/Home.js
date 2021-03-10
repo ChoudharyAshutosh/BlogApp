@@ -2,6 +2,8 @@ import React from 'react'
 import { Paper } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import {Link} from 'react-router-dom'
 import './Home.css'
 const containStyle=makeStyles((theme)=>({
     dataContainer:{
@@ -29,11 +31,13 @@ const containStyle=makeStyles((theme)=>({
     },
     userData:{
         margin:'0% 4% 4% 3.7%',
-        overflowX:'hidden'
+        overflowX:'hidden',
+        padding:'0% 2%'
     },
     postData:{
         margin:'0% 2% 2% 2%',
-        overflowX:'hidden'
+        overflowX:'hidden',
+        padding:'0% 1.5%'
     },
     dataHeader1:{
         fontSize:'140%',
@@ -54,26 +58,73 @@ const containStyle=makeStyles((theme)=>({
         padding:'0.5% 0%'
     },
     userList:{
-        height:'95%',
+        height:'88%',
         overflowY:'scroll',
-        margin:'0.5% -3% 0% -3%'
+        margin:'0.5% -3% 2% -3%'
     },
     postList:{
-        height:'95%',
+        height:'87.5%',
         overflowY:'scroll',
-        margin:'0.5% -1.5% 0% -1.5%'
+        margin:'0.5% -1.5% 1% -1.5%'
+    },
+    dataOverflow:{
+        wordBreak:'break-word'
+    },
+    highLight:{
+        fontWeight:'bolder',
+    },
+    postTitle:{
+        fontWeight:'bolder',
+        color:'red',
+        textTransform:'capitalize'
+    },
+    showUsers:{
+        display:'flex',
+        flexDirection:'row-reverse',
+        marginRight:'4.5%'
+    },
+    showPosts:{
+        display:'flex',
+        flexDirection:'row-reverse',
+        marginRight:'2.5%',
+    },
+    changeDecoration:{
+        textDecoration:'none'
     }
 }))
 function Home(props){
     const style=containStyle()
-    const displayLogged=(props)=>{
-        if(props.loggedUser !=='null'){
-            var a=[props.loggedUser]
-    return (
-        a.map((e)=>{
-        return (<div className={style.userData}>{e}</div>)
-        })
-    )}
+    const displayUsers=(data)=>{
+        if(data.loggedInUser !=='null'){
+            return (
+                data.users.map((user)=>{
+                    if(user.id !== data.loggedInUser.id)
+                        return(
+                            <Paper key={`user${user.id}`} id={`user${user.id}`} className={style.userData}>
+                                <p className={style.dataOverflow}><span className={style.highLight}>Name</span> : {user.name}</p>
+                                <p className={style.dataOverflow}><span className={style.highLight}>Email</span> : {user.email}</p>
+                            </Paper>
+                        )
+                })
+            )
+        }
+    }
+    const displayPosts=(data)=>{
+        let userId;
+        if(data.loggedInUser !== 'null'){
+            userId=data.loggedInUser.id;
+            return(
+                data.posts.map((post)=>{
+                    if(post.userId===userId)
+                        return(
+                            <Paper key={`post${post.userId}${post.id}`} id={`post${post.userId}${post.id}`} className={style.postData}>
+                                <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
+                                <p className={style.dataOverflow}>{post.body}</p>
+                            </Paper>
+                        )
+                })
+            )
+        }
     }
     return(
         <div className={style.block}>
@@ -85,113 +136,25 @@ function Home(props){
                     </header>
                     <Grid className={style.userList}>
                         {
-                            displayLogged(props)   
+                            displayUsers(props.data)   
                         }
-                        <Paper className={style.userData}>
-                        ggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbfgbcgb
-                        <div>{}</div>
-                        </Paper>
-                        <Paper className={style.userData}>
-                        ggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbfgbcgb
-                        </Paper>
-                        <Paper className={style.userData}>
-                        ggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbfgbcgb
-                        </Paper>
                     </Grid>
+                    <div className={style.showUsers}>
+                        <Link className={style.changeDecoration} to="/users"><Button variant="contained" color="secondary">All Details</Button></Link>
+                    </div>
                 </Grid>
                 <Grid className={style.dataContainer} item xs={7}>
                 <header className={style.dataHeader2}>
                         your posts
                     </header>
                     <Grid className={style.postList}>
-                        <Paper className={style.postData}>
-                        ggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbfgbcgb
-                        </Paper>
-                        <Paper className={style.postData}>
-                        ggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbfgbcgb
-                        </Paper>
-                        <Paper className={style.postData}>
-                        ggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbb
-                        bbbbbbbbbbbbbbbbfgbcgb
-                        </Paper>
+                        {
+                            displayPosts(props.data)
+                        }
                     </Grid>
+                    <div className={style.showPosts}>
+                        <Link className={style.changeDecoration} to="/blogs"><Button variant="contained" color="secondary">All Posts</Button></Link>
+                    </div>
                 </Grid>
             </Grid>
         </div>

@@ -32,14 +32,18 @@ function Login(props){
             user.value='';
         }
         let present=false;
-        props.data.users.forEach(userData=>{
+        let indexToAdd=-1
+        props.data.users.forEach((userData, index)=>{
             if(userData.username===username && userData.email===email)
-            present=true
+            {
+                present=true
+                indexToAdd=index
+            }
         })
         if(present===true)
             {   console.log("hgggfghfg")
-                console.log(email)
-                props.loginUser(email)
+                console.log(email, indexToAdd)
+                props.loginUser(email, indexToAdd+1)
                 console.log(props.data)
             //    window.location.href="/home";
         }
