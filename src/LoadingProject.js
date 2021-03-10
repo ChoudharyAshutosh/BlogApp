@@ -11,7 +11,8 @@ class LoadingProject extends Component{
     this.state={
       users:'null',
       posts:'null',
-      selectedPost:'null'
+      selectedPost:'null',
+      loggedInUser:'null'   
     }
   }
   componentDidMount(){
@@ -28,13 +29,17 @@ class LoadingProject extends Component{
     })
     console.log(users, posts)
   }
+  loginUser=(email)=>{
+    console.log(email)
+    this.setState({'loggedInUser':email})
+  }
   render(){
     return(
         <Router>
-          <Route exact path='/' render={()=><SwitchToLogin data={this.state.users}/>}></Route>
-          <Route exact path='/login' render={()=><Login data={this.state}/>}></Route>
+          <Route exact path='/' render={()=><SwitchToLogin data={this.state}/>}></Route>
+          <Route exact path='/login' render={()=><Login data={this.state} loginUser={this.loginUser}/>}></Route>
           <Route exact path='/blogs' render={()=><ShowPost/>}/>
-          <Route exact path='/home' render={()=><Home/>}/>
+          <Route exact path='/home' render={()=><Home loggedUser={this.state}/>}/>
         </Router>
       );
   }

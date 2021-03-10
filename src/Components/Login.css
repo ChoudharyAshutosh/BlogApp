@@ -5,10 +5,20 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100vh;
+  height: 80vh;
 }
 .login-form{
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+header{
+  font-style: italic;
+  background-color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-weight: bolder;
+  font-size: 150%;
+  padding:1%;
+  text-transform: uppercase;
 }

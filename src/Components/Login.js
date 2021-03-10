@@ -1,11 +1,20 @@
 import TextField from "@material-ui/core/TextField"
 import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+import {Link} from 'react-router-dom'
 import './Login.css'
 const loginStyles=makeStyles((theme)=>({
     inputController:{
         margin:'0.5%',
         width:'70%'
+    },
+    button:{
+        width:"100%"
+    },
+    forward:{
+        margin:'0.5%',
+        width:'70%',
+        textDecoration:'none'
     }
 }))
 
@@ -14,7 +23,9 @@ function Login(props){
     function validateEmail(mail, password){
         let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         let emailContainer=document.querySelector(`#${mail}`);
+        let email=emailContainer.value
         let user=document.querySelector(`#${password}`)
+        let username=user.value
         if(!(emailContainer.value.match(validRegex)))
         {   alert("Please enter valid email")
             emailContainer.value='';
@@ -22,11 +33,16 @@ function Login(props){
         }
         let present=false;
         props.data.users.forEach(userData=>{
-            if(userData.username===user.value && userData.email===emailContainer.value)
+            if(userData.username===username && userData.email===email)
             present=true
         })
         if(present===true)
-            window.location.href="/home";
+            {   console.log("hgggfghfg")
+                console.log(email)
+                props.loginUser(email)
+                console.log(props.data)
+            //    window.location.href="/home";
+        }
         else    
             {   alert("Please enter valid email or password")
             emailContainer.value='';
@@ -34,12 +50,15 @@ function Login(props){
         }
     }
         return(
-            <div className='login-container'>
-                <form className="login-form" action='#'>
-                <TextField className={login.inputController} inputProps={{ 'type': 'email' }} variant='outlined' id='email' label='Email' size='small'></TextField>
-                <TextField className={login.inputController} inputProps={{ 'type': 'password' }} variant='outlined' id='password' label='Password' size='small'></TextField>
-                <Button className={login.inputController} onClick={validateEmail.bind(this,"email","password")} variant='contained' color='primary' size='medium'>Login</Button>
-                </form>{console.log(props.data)}
+            <div>
+                <header>By Ashutosh Choudhary</header>
+                <div className='login-container'>
+                    <form className="login-form" action='#'>
+                    <TextField className={login.inputController} inputProps={{ 'type': 'email' }} variant='outlined' id='email' label='Email' size='small'></TextField>
+                    <TextField className={login.inputController} inputProps={{ 'type': 'password' }} variant='outlined' id='password' label='Password' size='small'></TextField>
+                    <Link className={login.forward} to="/home"><Button className={login.button} onClick={validateEmail.bind(this,"email","password")} variant='contained' color='primary' size='medium'>Login</Button></Link>
+                    </form>{console.log(props.data)}
+                </div>
             </div>
         )
     }
