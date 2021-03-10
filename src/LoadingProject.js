@@ -3,6 +3,7 @@ import SwitchToLogin from "./Components/SwitchToLogin";
 import Login from './Components/Login'
 import ShowPost from './Components/ShowPost'
 import Home from './Components/Home'
+import Users from './Components/Users'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import axios from 'axios'
 class LoadingProject extends Component{
@@ -13,6 +14,7 @@ class LoadingProject extends Component{
       posts:'null',
       selectedPost:'null',
       loggedInUser:'null',
+      filterUser:'null',
     }
   }
   componentDidMount(){
@@ -33,6 +35,9 @@ class LoadingProject extends Component{
     console.log(email)
     this.setState({'loggedInUser':{'email':email, 'id':index}})
   }
+  filterSearch=(username)=>{
+    this.setState({"filterUser": username})
+  }
   render(){
     return(
         <Router>
@@ -40,6 +45,7 @@ class LoadingProject extends Component{
           <Route exact path='/login' render={()=><Login data={this.state} loginUser={this.loginUser}/>}></Route>
           <Route exact path='/blogs' render={()=><ShowPost/>}/>
           <Route exact path='/home' render={()=><Home data={this.state}/>}/>
+          <Route exact path='/users' render={()=><Users data={this.state} filter={this.filterSearch}/>}/>
         </Router>
       );
   }

@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import {Link} from 'react-router-dom'
-import './Home.css'
 const containStyle=makeStyles((theme)=>({
     dataContainer:{
         margin:'1% 2% 0% 2%',

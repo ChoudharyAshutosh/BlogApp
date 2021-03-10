@@ -45,8 +45,7 @@ function Login(props){
                 console.log(email, indexToAdd)
                 props.loginUser(email, indexToAdd+1)
                 console.log(props.data)
-            //    window.location.href="/home";
-        }
+            }
         else    
             {   alert("Please enter valid email or password")
             emailContainer.value='';
