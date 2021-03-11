@@ -1,7 +1,7 @@
 import TextField from "@material-ui/core/TextField"
 import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import './Login.css'
 const loginStyles=makeStyles((theme)=>({
     inputController:{
@@ -38,18 +38,18 @@ function Login(props){
             {
                 present=true
                 indexToAdd=index
+                props.loginUser('*', '*')
             }
         })
         if(present===true)
-            {   console.log("hgggfghfg")
-                console.log(email, indexToAdd)
-                props.loginUser(email, indexToAdd+1)
-                console.log(props.data)
+            {   props.loginUser(email, indexToAdd+1)
+                props.setRedirection("/home")
             }
         else    
             {   alert("Please enter valid email or password")
-            emailContainer.value='';
-            user.value='';
+                emailContainer.value='';
+                user.value='';
+                props.loginUser('*', '*')
         }
     }
         return(
@@ -59,8 +59,8 @@ function Login(props){
                     <form className="login-form" action='#'>
                     <TextField className={login.inputController} inputProps={{ 'type': 'email' }} variant='outlined' id='email' label='Email' size='small'></TextField>
                     <TextField className={login.inputController} inputProps={{ 'type': 'password' }} variant='outlined' id='password' label='Password' size='small'></TextField>
-                    <Link className={login.forward} to="/home"><Button className={login.button} onClick={validateEmail.bind(this,"email","password")} variant='contained' color='primary' size='medium'>Login</Button></Link>
-                    </form>{console.log(props.data)}
+                    <Button className={login.inputController} onClick={validateEmail.bind(this,"email","password")} variant='contained' color='primary' size='medium'>Login</Button>
+                    </form>
                 </div>
             </div>
         )

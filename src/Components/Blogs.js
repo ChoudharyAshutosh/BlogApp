@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button'
 import {Link} from 'react-router-dom'
 const containerStyle=makeStyles((theme)=>({
     box:{
-        padding: '0.5% 0% 0% 0%',
+        padding: '0% 0% 0% 0%',
         overflow:'hidden',
         marginBottom:'0%',
         height:'98vh'
@@ -14,7 +14,7 @@ const containerStyle=makeStyles((theme)=>({
     container:{
         display:'flex',
         flexDirection:'row',
-        height:'98vh',
+        height:'90vh',
         justifyContent:'center'
     },
     listContainer:{
@@ -24,15 +24,20 @@ const containerStyle=makeStyles((theme)=>({
         display:'flex',
         flexDirection:'column',
         alignItems:'center',
-        height:'90vh',
+        height:'80vh',
         overflowY:'scroll'
     },
     postDetail:{
+        cursor:'pointer !important',
         width:'100%',
         backgroundColor:'lightgray',
         marginBottom:'1%',
-        padding:"0% 1%",
+        padding:"1% 1%",
         wordBreak:'break-word',
+    },
+    Link:{
+        width:'100%',
+        textDecoration:'none'
     },
     postTitle:{
         fontWeight:'bolder',
@@ -61,26 +66,46 @@ const containerStyle=makeStyles((theme)=>({
         margin:'1% 0% 1% 0%',
         backgroundColor:'whitesmoke'
     },
+    header:{
+        fontStyle:"italic",
+        backgroundColor:'black',
+        fontFamily:'Verdana, Geneva, Tahoma, sans-serif',
+        color:'white',
+        fontWeight:'bolder',
+        fontSize:'150%',
+        padding:'1%',
+        textTransform:'uppercase',
+        marginBottom:'0.5%'
+    },
+    dataOverflow:{
+        wordBreak:'break-word'
+    },
     filerButton:{
         width:'100%',
         margin:'1% 0% 1% 0%',
-    }
+    },
 }))
-function Blog(props){
+function Blogs(props){
     const style=containerStyle()
     const displayBlogs=(data)=>{
         if(data.loggedInUser !=='null'){
             return (
                 data.posts.map((post)=>{
                     return(
-                        <Paper key={`post${post.userId}${post.id}`} id={`post${post.userId}${post.id}`} className={style.postDetail}>
-                            <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
-                            <p className={style.dataOverflow}>{post.body}</p>
-                        </Paper>
+                        <Link className={style.Link} to={`/blogs/blog+${post.userId}+${post.id}`}  key={`blog${post.userId}${post.id}`}>
+                            <Paper style={{cursor:'pointer'}} onClick={openPost.bind(this, `blog+${post.userId}+${post.id}`)} id={`blog${post.userId}${post.id}`} className={style.postDetail}>
+                                <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
+                                <p className={style.dataOverflow}>{post.body}</p>
+                            </Paper>
+                        </Link>
                     )
                 })
             )
         }
+    }
+    const openPost=(data)=>{
+        props.selectPost(data)
+        props.setPrevious("/blogs")
     }
     const displayFilteredBlogs=(data)=>{
         if(data.loggedInUser !=='null'){
@@ -89,28 +114,34 @@ function Blog(props){
                     if(data.filterPost.userId!=='' && data.filterPost.title!==''){                        
                         if(post.userId.toString() === data.filterPost.userId && post.title===data.filterPost.title.toLowerCase())
                             return(
-                                <Paper key={`post${post.userId}${post.id}`} id={`post${post.userId}${post.id}`} className={style.postDetail}>
-                                    <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
-                                    <p className={style.dataOverflow}>{post.body}</p>
-                                </Paper>
+                                <Link className={style.Link} to={`/blogs/blog+${post.userId}+${post.id}`} key={`blog${post.userId}${post.id}`}>
+                                    <Paper style={{cursor:'pointer'}} onClick={openPost.bind(this, `blog+${post.userId}+${post.id}`)} id={`blog${post.userId}${post.id}`} className={style.postDetail}>
+                                        <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
+                                        <p className={style.dataOverflow}>{post.body}</p>
+                                    </Paper>
+                                </Link>
                         )
                     }
                     else if(data.filterPost.title !==''){
                         if(post.title.toString()===data.filterPost.title.toLowerCase())
                         return(
-                            <Paper key={`post${post.userId}${post.id}`} id={`post${post.userId}${post.id}`} className={style.postDetail}>
-                                <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
-                                <p className={style.dataOverflow}>{post.body}</p>
-                            </Paper>
+                            <Link className={style.Link} to={`/blogs/blog+${post.userId}+${post.id}`} key={`blog${post.userId}${post.id}`}>
+                                <Paper style={{cursor:'pointer'}} onClick={openPost.bind(this, `blog+${post.userId}+${post.id}`)} id={`blog${post.userId}${post.id}`} className={style.postDetail}>
+                                    <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
+                                    <p className={style.dataOverflow}>{post.body}</p>
+                                </Paper>
+                            </Link>
                         )
                     }
                     else if(data.filterPost.userId !==''){
                         if(post.userId.toString() === data.filterPost.userId)
                         return(
-                            <Paper key={`post${post.userId}${post.id}`} id={`post${post.userId}${post.id}`} className={style.postDetail}>
-                                <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
-                                <p className={style.dataOverflow}>{post.body}</p>
-                            </Paper>
+                            <Link className={style.Link} to={`/blogs/blog+${post.userId}+${post.id}`} key={`blog${post.userId}${post.id}`}>
+                                <Paper style={{cursor:'pointer'}} onClick={openPost.bind(this, `blog+${post.userId}+${post.id}`)} id={`blog${post.userId}${post.id}`} className={style.postDetail}>
+                                    <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
+                                    <p className={style.dataOverflow}>{post.body}</p>
+                                </Paper>
+                            </Link>
                         )
                     }
                 })
@@ -140,6 +171,7 @@ function Blog(props){
     }
     return(
         <div className={style.box}>
+            <header className={style.header}>By Ashutosh Choudhary</header>
             <Link className={style.textDecoratoin} to="/home"><Button className={style.backButton} color="primary" variant='contained' onClick={setFilter.bind(this,"userId","Title","clear")}>Back</Button></Link>
             <div className={style.container}>
                 <div className={style.filter}>
@@ -157,4 +189,4 @@ function Blog(props){
         </div>
     )
 }
-export default Blog
+export default Blogs

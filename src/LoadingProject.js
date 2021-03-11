@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import SwitchToLogin from "./Components/SwitchToLogin";
 import Login from './Components/Login'
-import Blog from './Components/Blog'
+import Blogs from './Components/Blogs'
 import Home from './Components/Home'
 import Users from './Components/Users'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import BlogPost from './Components/BlogPost'
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
 import axios from 'axios'
 class LoadingProject extends Component{
   constructor(props){
@@ -15,7 +16,9 @@ class LoadingProject extends Component{
       selectedPost:'null',
       loggedInUser:'null',
       filterUser:'null',
-      filterPost:'null'
+      filterPost:'null',
+      previous:'null',
+      redirect:'null'
     }
   }
   componentDidMount(){
@@ -23,17 +26,13 @@ class LoadingProject extends Component{
     let url1='https://jsonplaceholder.typicode.com/users'
     axios.get(url1).then((response)=>{
       this.setState({'users':response.data})
-      console.log(response.data)
     })
     let url2='https://jsonplaceholder.typicode.com/posts'
     axios.get(url2).then((response)=>{
       this.setState({'posts':response.data})
-      console.log(response.data)
     })
-    console.log(users, posts)
   }
   loginUser=(email, index)=>{
-    console.log(email)
     this.setState({'loggedInUser':{'email':email, 'id':index}})
   }
   filterUser=(username)=>{
@@ -46,13 +45,31 @@ class LoadingProject extends Component{
     }
     this.setState({"filterPost":{'userId':userId, 'title':title}})
   }
+  selectPost=(post)=>{
+    this.setState({selectedPost:post})
+  }
+  setPrevious=(url)=>{
+    this.setState({'previous':url})
+  }
+  setRouting=(path)=>{
+    this.setState({'redirect':path})
+    return <Redirect push to='/home'/>
+  }
+  routing=()=>{
+    if(this.state.redirect !== 'null'){
+      return <Redirect to='/home'></Redirect>}
+  }
   render(){
     return(
         <Router>
+          {
+            this.routing()
+          }
           <Route exact path='/' render={()=><SwitchToLogin data={this.state}/>}></Route>
-          <Route exact path='/login' render={()=><Login data={this.state} loginUser={this.loginUser}/>}></Route>
-          <Route exact path='/blogs' render={()=><Blog data={this.state} filter={this.filterPost}/>}/>
-          <Route exact path='/home' render={()=><Home data={this.state}/>}/>
+          <Route exact path='/login' render={()=><Login data={this.state} setRedirection={this.setRouting} loginUser={this.loginUser}/>}></Route>
+          <Route exact path='/blogs' render={()=><Blogs data={this.state} setPrevious={this.setPrevious} filter={this.filterPost} selectPost={this.selectPost}/>}/>
+          <Route exact path='/home' render={()=><Home data={this.state} setPrevious={this.setPrevious} selectPost={this.selectPost}/>}/>
+          <Route exact path='/blogs/:blog' render={()=><BlogPost data={this.state}/>}/>
           <Route exact path='/users' render={()=><Users data={this.state} filter={this.filterUser}/>}/>
         </Router>
       );

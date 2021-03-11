@@ -38,6 +38,9 @@ const containStyle=makeStyles((theme)=>({
         overflowX:'hidden',
         padding:'0% 1.5%'
     },
+    Link:{
+        textDecoration:'none'
+    },
     dataHeader1:{
         fontSize:'140%',
         backgroundColor:'#0000cc',
@@ -116,14 +119,20 @@ function Home(props){
                 data.posts.map((post)=>{
                     if(post.userId===userId)
                         return(
-                            <Paper key={`post${post.userId}${post.id}`} id={`post${post.userId}${post.id}`} className={style.postData}>
-                                <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
-                                <p className={style.dataOverflow}>{post.body}</p>
-                            </Paper>
+                            <Link className={style.Link} to={`/blogs/blog+${post.userId}+${post.id}`}  key={`blog${post.userId}${post.id}`}>
+                                <Paper id={`post${post.userId}${post.id}`} onClick={openPost.bind(this, `blog+${post.userId}+${post.id}`)} className={style.postData}>
+                                    <p className={style.dataOverflow}><span className={style.postTitle}>{post.title}</span></p>
+                                    <p className={style.dataOverflow}>{post.body}</p>
+                                </Paper>
+                            </Link> 
                         )
                 })
             )
         }
+    }
+    const openPost=(data)=>{
+        props.selectPost(data)
+        props.setPrevious("/home")
     }
     return(
         <div className={style.block}>

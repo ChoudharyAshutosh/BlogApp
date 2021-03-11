@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button'
 import {Link} from 'react-router-dom'
 const containerStyle=makeStyles((theme)=>({
     box:{
-        padding: '0.5% 0% 0% 0%',
+        padding: '0% 0% 0% 0%',
         overflow:'hidden',
         marginBottom:'0%',
         height:'98vh'
@@ -24,7 +24,7 @@ const containerStyle=makeStyles((theme)=>({
         display:'flex',
         flexDirection:'column',
         alignItems:'center',
-        height:'90vh',
+        height:'80vh',
         overflowY:'scroll'
     },
     userDetail:{
@@ -56,6 +56,20 @@ const containerStyle=makeStyles((theme)=>({
         margin:'1% 0% 1% 0%',
         backgroundColor:'whitesmoke'
     },
+    header:{
+        fontStyle:"italic",
+        backgroundColor:'black',
+        fontFamily:'Verdana, Geneva, Tahoma, sans-serif',
+        color:'white',
+        fontWeight:'bolder',
+        fontSize:'150%',
+        padding:'1%',
+        textTransform:'uppercase',
+        marginBottom:'0.5%'
+    },
+    dataOverflow:{
+        wordBreak:'break-word'
+    },
     filerButton:{
         width:'100%',
         margin:'1% 0% 1% 0%',
@@ -76,7 +90,7 @@ function Users(props){
                                 <p className={style.dataOverflow}><span className={style.highLight}>Phone</span> : {user.phone}</p>
                                 <p className={style.dataOverflow}><span className={style.highLight}>Company</span> : {user.company.name}</p>
                                 <p className={style.dataOverflow}><span className={style.highLight}>CatchPhrase</span> : {user.company.catchPhrase}</p>
-                        <p className={style.dataOverflow}><span className={style.highLight}>Address</span> : {user.address.suite}, {user.address.street}, {user.address.city} - {user.address.zipcode}</p>
+                                <p className={style.dataOverflow}><span className={style.highLight}>Address</span> : {user.address.suite}, {user.address.street}, {user.address.city} - {user.address.zipcode}</p>
                             </Paper>
                         )
                 })
@@ -123,6 +137,7 @@ function Users(props){
     }
     return(
         <div className={style.box}>
+            <header className={style.header}>By Ashutosh Choudhary</header>
             <Link className={style.textDecoratoin} to="/home"><Button className={style.backButton} color="primary" variant='contained' onClick={setFilter.bind(this,"name","clear")}>Back</Button></Link>
             <div className={style.container}>
                 <div className={style.filter}>
